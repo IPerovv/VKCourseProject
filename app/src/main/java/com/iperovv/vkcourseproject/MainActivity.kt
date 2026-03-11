@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.ui.Modifier
 import com.iperovv.vkcourseproject.ui.screens.appdetails.AppDetailsScreen
+import com.iperovv.vkcourseproject.ui.screens.applist.AppListScreen
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,11 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             VKCourseProjectTheme {
-                AppDetailsScreen(
-                    Modifier
-                        .fillMaxSize()
-                        .safeDrawingPadding()
-                )
+                AppListScreen()
             }
         }
     }
