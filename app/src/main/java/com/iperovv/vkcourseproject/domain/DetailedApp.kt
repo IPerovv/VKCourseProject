@@ -10,4 +10,3 @@ data class DetailedApp(
     val screenshotUrlList: List<String>,
     val description: String,
 )
-

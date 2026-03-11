@@ -26,6 +26,7 @@ import coil.compose.AsyncImage
 import com.iperovv.vkcourseproject.R
 import com.iperovv.vkcourseproject.domain.AppCategory
 import com.iperovv.vkcourseproject.domain.DetailedApp
+import com.iperovv.vkcourseproject.ui.common.util.getCategoryText
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 import kotlin.math.roundToInt
 
@@ -84,14 +85,6 @@ fun AppDetailsHeader(
             }
         }
     }
-}
-
-// Статичные строки, которые не приходят из бэкенда
-// нужно хранить в ресурсах (strings.xml).
-@Composable
-private fun getCategoryText(category: AppCategory): String = when (category) {
-    AppCategory.APP -> stringResource(R.string.category_app)
-    AppCategory.GAME -> stringResource(R.string.category_game)
 }
 
 @Preview

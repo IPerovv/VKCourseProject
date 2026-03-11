@@ -1,15 +1,18 @@
 package com.iperovv.vkcourseproject.ui.screens.applist.component
 
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
+import com.iperovv.vkcourseproject.ui.theme.FangHeight
+import com.iperovv.vkcourseproject.ui.theme.FangWidth
 
 class FangsShape(
-    private val clawHeight: Dp = 15.dp,
-    private val clawWidth: Dp = 15.dp,
+    private val fangHeight: Dp = FangHeight,
+    private val fangWidth: Dp = FangWidth,
     private val deepControlPoint: Pair<Float, Float> = 0.1f to 0.6f,
     private val shallowControlPoint: Pair<Float, Float> = 0.15f to 0.15f,
 ) : Shape {
@@ -19,8 +22,8 @@ class FangsShape(
         layoutDirection: LayoutDirection,
         density: Density
     ): Outline {
-        val h = with(density) { clawHeight.toPx() }
-        val w = with(density) { clawWidth.toPx() }
+        val h = with(density) { fangHeight.toPx() }
+        val w = with(density) { fangWidth.toPx() }
 
         val baseline = size.height - h
 
