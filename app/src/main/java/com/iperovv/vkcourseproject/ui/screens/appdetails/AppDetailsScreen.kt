@@ -4,10 +4,13 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -28,6 +31,7 @@ import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 @Composable
 fun AppDetailsScreen(
     modifier: Modifier = Modifier,
+    onNavigateBack: () -> Unit,
 ) {
     val app = remember { getApp() }
 
@@ -36,11 +40,14 @@ fun AppDetailsScreen(
 
     var descriptionCollapsed by remember { mutableStateOf(false) }
 
-    Column(modifier) {
+    Column(
+        modifier.padding(
+            WindowInsets.statusBars.asPaddingValues()
+        )
+    ) {
         Toolbar(
             onBackClick = {
-                // TODO: Открыть предыдущий экран через Jetpack Navigation
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
+                onNavigateBack()
             },
             onShareClick = {
                 Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
@@ -118,6 +125,6 @@ private fun Preview() {
     VKCourseProjectTheme {
         AppDetailsScreen(
             modifier = Modifier.fillMaxSize(),
-        )
+        ) { }
     }
 }

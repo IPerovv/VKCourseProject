@@ -17,7 +17,7 @@ val VKSansDisplay = FontFamily(
 )
 
 val RuStoreTypography = Typography(
-    // Заголовок 1 (самый крупный)
+    // Заголовок 1
     displayLarge = TextStyle(
         fontFamily = VKSansDisplay,
         fontWeight = FontWeight.Medium,

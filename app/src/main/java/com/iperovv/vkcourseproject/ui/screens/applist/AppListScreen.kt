@@ -1,21 +1,29 @@
 package com.iperovv.vkcourseproject.ui.screens.applist
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.iperovv.vkcourseproject.domain.AppCategory
 import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListTopAppBar
 import com.iperovv.vkcourseproject.ui.theme.FangHeight
+import com.iperovv.vkcourseproject.ui.theme.PaddingLarge
 import com.iperovv.vkcourseproject.domain.AppListItem as AppListItemDomainModel
 import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListItem as AppListItemComp
 
 @Composable
-fun AppListScreen(modifier: Modifier = Modifier) {
+fun AppListScreen(
+    modifier: Modifier = Modifier,
+    onAppClick: () -> Unit
+) {
     Scaffold(
         topBar = {
             AppListTopAppBar(
@@ -27,16 +35,30 @@ fun AppListScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(paddingValues)
                 .offset(y = -FangHeight),
-            apps = getApps()
+            apps = getApps(),
+            onAppClick = onAppClick
         )
     }
 }
 
 @Composable
-private fun Content(modifier: Modifier = Modifier, apps: List<AppListItemDomainModel>) {
+private fun Content(
+    modifier: Modifier = Modifier,
+    apps: List<AppListItemDomainModel>,
+    onAppClick: () -> Unit
+) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(apps) { app ->
-            AppListItemComp(app)
+            AppListItemComp(
+                app = app,
+                modifier = Modifier
+                    .clickable(
+                        onClick = { onAppClick() },
+                        indication = ripple(bounded = true),
+                        interactionSource = remember { MutableInteractionSource() }
+                    )
+                    .padding(horizontal = PaddingLarge),
+            )
         }
     }
 }
