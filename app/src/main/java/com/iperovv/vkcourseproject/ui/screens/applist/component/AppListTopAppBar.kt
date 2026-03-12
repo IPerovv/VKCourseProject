@@ -9,17 +9,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iperovv.vkcourseproject.R
 import com.iperovv.vkcourseproject.ui.common.component.RuStoreLogoWithText
 import com.iperovv.vkcourseproject.ui.theme.PaddingLarge
 import com.iperovv.vkcourseproject.ui.theme.RuStoreBlue
 import com.iperovv.vkcourseproject.ui.theme.RuStoreCustomBlue
+import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +34,7 @@ fun AppListTopAppBar(
             .fillMaxWidth()
             .height(120.dp)
             .background(
-                color = RuStoreBlue,
+                color = MaterialTheme.colorScheme.primary,
                 shape = FangsShape()
             )
     ) {
@@ -60,6 +63,14 @@ private fun TopAppBarContent(modifier: Modifier = Modifier) {
             backgroundColor = RuStoreCustomBlue,
             onClick = { /* TODO */ }
         )
+    }
+}
+
+@Preview(name = "AppListTopAppBar", showBackground = true)
+@Composable
+private fun PreviewAppListTopAppBar() {
+    VKCourseProjectTheme {
+        AppListTopAppBar()
     }
 }
 

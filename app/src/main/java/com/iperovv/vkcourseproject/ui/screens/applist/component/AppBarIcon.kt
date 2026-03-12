@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -15,9 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.iperovv.vkcourseproject.ui.theme.RuStoreWhite
+import com.iperovv.vkcourseproject.ui.theme.RuStoreCustomBlue
 
 @Composable
 fun AppBarIcon(
@@ -25,7 +28,7 @@ fun AppBarIcon(
     icon: Painter,
     contentDescription: String,
     backgroundColor: Color,
-    iconTint: Color = RuStoreWhite, // TODO будет зависеть от темы
+    iconTint: Color = MaterialTheme.colorScheme.surface, // TODO будет зависеть от темы
     iconSize: Dp = 24.dp,
     onClick: (() -> Unit)? = null,
 ) {
@@ -55,4 +58,15 @@ fun AppBarIcon(
             tint = iconTint
         )
     }
+}
+
+@Composable
+@Preview
+fun PreviewAppBarIcon() {
+    AppBarIcon(
+        icon = painterResource(android.R.drawable.ic_menu_edit),
+        contentDescription = "Preview icon",
+        backgroundColor = RuStoreCustomBlue,
+        onClick = { }
+    )
 }
