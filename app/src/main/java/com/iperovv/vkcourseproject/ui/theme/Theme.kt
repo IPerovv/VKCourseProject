@@ -1,6 +1,5 @@
 package com.iperovv.vkcourseproject.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,16 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    primary = RuStoreBlue,
     secondary = PurpleGrey80,
-    tertiary = Pink80
+    tertiary = Pink80,
+    onBackground = RuStoreWhite,
+    surface = RuStoreWhite
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = RuStoreBlue,
     secondary = PurpleGrey40,
-    tertiary = Pink40
-
+    tertiary = Pink40,
+    onBackground = RuStoreDarkBack,
+    surface = RuStoreWhite
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
@@ -37,7 +39,7 @@ private val LightColorScheme = lightColorScheme(
 fun VKCourseProjectTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -52,7 +54,7 @@ fun VKCourseProjectTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = RuStoreTypography,
         content = content
     )
 }
