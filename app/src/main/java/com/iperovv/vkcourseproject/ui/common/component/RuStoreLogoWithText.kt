@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -17,8 +18,11 @@ import com.iperovv.vkcourseproject.ui.theme.PaddingMedium
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @Composable
-fun RuStoreLogoWithText() {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+fun RuStoreLogoWithText(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         AppBarIcon(
             icon = painterResource(R.drawable.rustore_foreground),
             contentDescription = stringResource(R.string.rustore_logo_description),

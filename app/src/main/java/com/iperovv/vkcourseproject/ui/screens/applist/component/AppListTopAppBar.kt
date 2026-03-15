@@ -1,6 +1,8 @@
 package com.iperovv.vkcourseproject.ui.screens.applist.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,9 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +31,10 @@ import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppListTopAppBar(modifier: Modifier = Modifier) {
+fun AppListTopAppBar(
+    onLogoClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
         modifier =
             modifier
@@ -37,6 +46,7 @@ fun AppListTopAppBar(modifier: Modifier = Modifier) {
                 ),
     ) {
         TopAppBarContent(
+            onLogoClick = { onLogoClick() },
             modifier =
                 Modifier
                     .fillMaxSize()
@@ -46,7 +56,10 @@ fun AppListTopAppBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun TopAppBarContent(modifier: Modifier = Modifier) {
+private fun TopAppBarContent(
+    onLogoClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Row(
         modifier =
             modifier
@@ -55,7 +68,10 @@ private fun TopAppBarContent(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RuStoreLogoWithText()
+        RuStoreLogoWithText(
+            modifier = Modifier
+                .clickable(onClick = onLogoClick)
+        )
 
         AppBarIcon(
             icon = painterResource(R.drawable.outline_view_cozy_24),
@@ -70,6 +86,8 @@ private fun TopAppBarContent(modifier: Modifier = Modifier) {
 @Composable
 private fun PreviewAppListTopAppBar() {
     VKCourseProjectTheme {
-        AppListTopAppBar()
+        AppListTopAppBar(
+            onLogoClick = { },
+        )
     }
 }

@@ -8,28 +8,52 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.iperovv.vkcourseproject.domain.AppCategory
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListTopAppBar
 import com.iperovv.vkcourseproject.ui.theme.FangHeight
 import com.iperovv.vkcourseproject.ui.theme.PaddingLarge
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 import com.iperovv.vkcourseproject.domain.AppListItem as AppListItemDomainModel
 import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListItem as AppListItemComp
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun AppListScreen(
     onAppClick: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: AppListScreenViewModel = viewModel(),
 ) {
+    val apps by viewModel.apps
+
+    val isSnackShown by viewModel.isSnackShown
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         modifier = modifier,
         topBar = {
-            AppListTopAppBar()
+            AppListTopAppBar(
+                onLogoClick = {
+                    if (!isSnackShown) {
+                        scope.launch {
+                            snackbarHostState.showSnackbar("RuStore logo clicked")
+                        }
+                        viewModel.onSnackShown()
+                    }
+                },
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         },
     ) { paddingValues ->
         Content(
@@ -37,7 +61,7 @@ fun AppListScreen(
                 Modifier
                     .padding(paddingValues)
                     .offset(y = -FangHeight),
-            apps = getApps(),
+            apps = apps,
             onAppClick = onAppClick,
         )
     }
@@ -65,20 +89,12 @@ private fun Content(
     }
 }
 
-private fun getApps(): List<AppListItemDomainModel> =
-    List(15) {
-        AppListItemDomainModel(
-            name = "Гильдия Героев: Экшен",
-            category = AppCategory.GAME,
-            iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
-            slogan = "Легендарный рейд героев",
-        )
-    }
-
 @Preview(name = "AppListScreen", showBackground = true)
 @Composable
 private fun PreviewAppListScreen() {
     VKCourseProjectTheme {
-        AppListScreen(onAppClick = {})
+        AppListScreen(
+            onAppClick = {},
+        )
     }
 }
