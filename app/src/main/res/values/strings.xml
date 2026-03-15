@@ -20,4 +20,6 @@
     <string name="rustore_logo_description">RuStore Logo</string>
     <string name="change_to_grid_button_description">Change to grid button</string>
     <string name="rustore_logo_text">RuStore</string>
+    <string name="retry">Повторить</string>
+    <string name="an_error_occured">Произошла ошибка</string>
 </resources>
