@@ -1,20 +1,42 @@
 package com.iperovv.vkcourseproject.ui.screens.applist
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.iperovv.vkcourseproject.domain.AppCategory
 import com.iperovv.vkcourseproject.domain.AppListItem
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class AppListScreenViewModel : ViewModel() {
-    private val _apps = mutableStateOf<List<AppListItem>>(getApps())
-    val apps: State<List<AppListItem>> = _apps
+    private val _state = MutableStateFlow<AppListScreenState>(AppListScreenState.Loading)
+    val state: StateFlow<AppListScreenState> = _state.asStateFlow()
 
-    private val _isSnackShown = mutableStateOf<Boolean>(false)
-    val isSnackShown: State<Boolean> = _isSnackShown
+    private val _isSnackShown = MutableStateFlow<Boolean>(false)
+    val isSnackShown: StateFlow<Boolean> = _isSnackShown
+
+    init {
+        loadApps()
+    }
 
     fun onSnackShown() {
         _isSnackShown.value = true
+    }
+
+    fun loadApps() {
+        viewModelScope.launch {
+            _state.value = AppListScreenState.Loading
+            runCatching {
+                delay(2000L)
+                val apps = getApps()
+                _state.value = AppListScreenState.Success(apps)
+            }.onFailure {
+                // TODO Знаю, что это нечеловекочитаемо, но пусть временно будет так
+                _state.value = AppListScreenState.Error(it.message)
+            }
+        }
     }
 }
 

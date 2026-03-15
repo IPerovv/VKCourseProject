@@ -1,12 +1,16 @@
 package com.iperovv.vkcourseproject.ui.screens.applist
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.ripple
@@ -24,6 +28,12 @@ import com.iperovv.vkcourseproject.domain.AppListItem as AppListItemDomainModel
 import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListItem as AppListItemComp
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.iperovv.vkcourseproject.R
+import com.iperovv.vkcourseproject.ui.common.component.ErrorPlaceholder
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,9 +42,10 @@ fun AppListScreen(
     modifier: Modifier = Modifier,
     viewModel: AppListScreenViewModel = viewModel(),
 ) {
-    val apps by viewModel.apps
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val isSnackShown by viewModel.isSnackShown
+    val isSnackShown by viewModel.isSnackShown.collectAsStateWithLifecycle()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -56,14 +67,46 @@ fun AppListScreen(
             SnackbarHost(hostState = snackbarHostState)
         },
     ) { paddingValues ->
-        Content(
-            modifier =
-                Modifier
-                    .padding(paddingValues)
-                    .offset(y = -FangHeight),
-            apps = apps,
-            onAppClick = onAppClick,
-        )
+        when (val currentState = state) {
+            is AppListScreenState.Error -> {
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .background(color = MaterialTheme.colorScheme.background),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    ErrorPlaceholder(
+                        modifier = Modifier.padding(16.dp),
+                        title = currentState.error ?: stringResource(R.string.an_error_occured),
+                        onRetry = { },
+                        description = null,
+                    )
+                }
+            }
+
+            is AppListScreenState.Loading -> {
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .background(color = MaterialTheme.colorScheme.background),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is AppListScreenState.Success ->
+                Content(
+                    modifier =
+                        Modifier
+                            .padding(paddingValues)
+                            .offset(y = -FangHeight),
+                    apps = currentState.appList,
+                    onAppClick = onAppClick,
+                )
+        }
     }
 }
 
