@@ -1,8 +1,11 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -40,6 +43,20 @@ android {
     }
 }
 
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    outputToConsole.set(true)
+
+    filter {
+        include("**/src/**/*.kt")
+        exclude("**/generated/**")
+    }
+    reporters {
+        reporter(ReporterType.JSON)
+    }
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -61,5 +78,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
+    ktlintRuleset(libs.ktlint.compose)
 }
