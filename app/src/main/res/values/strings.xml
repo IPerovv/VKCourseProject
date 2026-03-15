@@ -22,4 +22,5 @@
     <string name="rustore_logo_text">RuStore</string>
     <string name="retry">Повторить</string>
     <string name="an_error_occured">Произошла ошибка</string>
+    <string name="rustore_logo_clicked">RuStore logo clicked</string>
 </resources>

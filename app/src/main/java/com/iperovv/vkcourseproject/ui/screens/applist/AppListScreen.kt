@@ -29,6 +29,7 @@ import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListItem as A
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -49,6 +50,8 @@ fun AppListScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
+    val context = LocalContext.current
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -56,7 +59,9 @@ fun AppListScreen(
                 onLogoClick = {
                     if (!isSnackShown) {
                         scope.launch {
-                            snackbarHostState.showSnackbar("RuStore logo clicked")
+                            snackbarHostState.showSnackbar(
+                                context.getString(R.string.rustore_logo_clicked),
+                            )
                         }
                         viewModel.onSnackShown()
                     }
