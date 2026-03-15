@@ -23,57 +23,57 @@ import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListItem as A
 
 @Composable
 fun AppListScreen(
+    onAppClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onAppClick: () -> Unit
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
-            AppListTopAppBar(
-                modifier = modifier,
-            )
-        }
+            AppListTopAppBar()
+        },
     ) { paddingValues ->
         Content(
-            modifier = Modifier
-                .padding(paddingValues)
-                .offset(y = -FangHeight),
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .offset(y = -FangHeight),
             apps = getApps(),
-            onAppClick = onAppClick
+            onAppClick = onAppClick,
         )
     }
 }
 
 @Composable
 private fun Content(
-    modifier: Modifier = Modifier,
+    onAppClick: () -> Unit,
     apps: List<AppListItemDomainModel>,
-    onAppClick: () -> Unit
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(apps) { app ->
             AppListItemComp(
                 app = app,
-                modifier = Modifier
-                    .clickable(
-                        onClick = { onAppClick() },
-                        indication = ripple(bounded = true),
-                        interactionSource = remember { MutableInteractionSource() }
-                    )
-                    .padding(horizontal = PaddingLarge),
+                modifier =
+                    Modifier
+                        .clickable(
+                            onClick = { onAppClick() },
+                            indication = ripple(bounded = true),
+                            interactionSource = remember { MutableInteractionSource() },
+                        ).padding(horizontal = PaddingLarge),
             )
         }
     }
 }
 
-private fun getApps(): List<AppListItemDomainModel> = List(15) {
-    AppListItemDomainModel(
-        name = "Гильдия Героев: Экшен",
-        category = AppCategory.GAME,
-        iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
-        slogan = "Легендарный рейд героев"
-    )
-}
-
+private fun getApps(): List<AppListItemDomainModel> =
+    List(15) {
+        AppListItemDomainModel(
+            name = "Гильдия Героев: Экшен",
+            category = AppCategory.GAME,
+            iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
+            slogan = "Легендарный рейд героев",
+        )
+    }
 
 @Preview(name = "AppListScreen", showBackground = true)
 @Composable

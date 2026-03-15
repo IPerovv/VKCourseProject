@@ -9,16 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
-
 @Composable
 fun VerticalSpacer(
+    height: Dp,
     color: Color = Color.Transparent,
-    height: Dp
 ) {
     Spacer(
         Modifier
             .fillMaxWidth()
             .height(height = height)
-            .background(color = color)
+            .background(color = color),
     )
 }

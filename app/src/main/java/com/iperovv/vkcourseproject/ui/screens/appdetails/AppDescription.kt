@@ -34,7 +34,7 @@ fun AppDescription(
         if (!collapsed) {
             TextButton(
                 onClick = onReadMoreClick,
-                contentPadding = PaddingValues(horizontal = 0.dp)
+                contentPadding = PaddingValues(horizontal = 0.dp),
             ) {
                 Text(
                     text = stringResource(R.string.app_details_read_more),

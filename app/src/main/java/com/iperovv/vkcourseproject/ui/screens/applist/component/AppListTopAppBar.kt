@@ -20,28 +20,27 @@ import androidx.compose.ui.unit.dp
 import com.iperovv.vkcourseproject.R
 import com.iperovv.vkcourseproject.ui.common.component.RuStoreLogoWithText
 import com.iperovv.vkcourseproject.ui.theme.PaddingLarge
-import com.iperovv.vkcourseproject.ui.theme.RuStoreBlue
 import com.iperovv.vkcourseproject.ui.theme.RuStoreCustomBlue
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppListTopAppBar(
-    modifier: Modifier = Modifier,
-) {
+fun AppListTopAppBar(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(120.dp)
-            .background(
-                color = MaterialTheme.colorScheme.primary,
-                shape = FangsShape()
-            )
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = FangsShape(),
+                ),
     ) {
         TopAppBarContent(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = PaddingLarge),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = PaddingLarge),
         )
     }
 }
@@ -49,9 +48,10 @@ fun AppListTopAppBar(
 @Composable
 private fun TopAppBarContent(modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = PaddingLarge),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = PaddingLarge),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -61,7 +61,7 @@ private fun TopAppBarContent(modifier: Modifier = Modifier) {
             icon = painterResource(R.drawable.outline_view_cozy_24),
             contentDescription = stringResource(R.string.change_to_grid_button_description),
             backgroundColor = RuStoreCustomBlue,
-            onClick = { /* TODO */ }
+            onClick = { /* TODO */ },
         )
     }
 }
@@ -73,5 +73,3 @@ private fun PreviewAppListTopAppBar() {
         AppListTopAppBar()
     }
 }
-
-

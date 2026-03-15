@@ -22,8 +22,9 @@ internal fun Toolbar(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth(),
     ) {
         IconButton(onClick = onBackClick) {
             Icon(
