@@ -21,18 +21,18 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.AppListScreen
+                    startDestination = Screen.AppListScreen,
                 ) {
                     composable<Screen.AppListScreen> {
                         AppListScreen(
                             onAppClick = {
                                 navController.navigate(Screen.AppDetailsScreen)
-                            }
+                            },
                         )
                     }
                     composable<Screen.AppDetailsScreen> {
                         AppDetailsScreen(
-                            onNavigateBack = { navController.popBackStack() }
+                            onNavigateBack = { navController.popBackStack() },
                         )
                     }
                 }

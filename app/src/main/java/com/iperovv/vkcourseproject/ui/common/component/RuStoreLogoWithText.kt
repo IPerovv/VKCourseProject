@@ -25,7 +25,7 @@ fun RuStoreLogoWithText() {
             backgroundColor = MaterialTheme.colorScheme.surface,
             iconTint = MaterialTheme.colorScheme.primary,
             iconSize = 28.dp,
-            onClick = null
+            onClick = null,
         )
 
         HorizontalSpacer(width = PaddingMedium)
@@ -34,14 +34,14 @@ fun RuStoreLogoWithText() {
             text = stringResource(R.string.rustore_logo_text),
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.surface
+            color = MaterialTheme.colorScheme.surface,
         )
     }
 }
 
 @Preview
 @Composable
-fun PreviewRuStoreLogoWithText() {
+private fun PreviewRuStoreLogoWithText() {
     VKCourseProjectTheme(darkTheme = false) {
         RuStoreLogoWithText()
     }

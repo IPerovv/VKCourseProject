@@ -9,16 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
-
 @Composable
 fun HorizontalSpacer(
+    width: Dp,
     color: Color = Color.Transparent,
-    width: Dp
 ) {
     Spacer(
         Modifier
             .fillMaxHeight()
             .width(width = width)
-            .background(color = color)
+            .background(color = color),
     )
 }

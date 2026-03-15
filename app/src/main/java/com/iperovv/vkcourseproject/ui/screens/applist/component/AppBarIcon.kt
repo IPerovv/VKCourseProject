@@ -24,49 +24,51 @@ import com.iperovv.vkcourseproject.ui.theme.RuStoreCustomBlue
 
 @Composable
 fun AppBarIcon(
-    modifier: Modifier = Modifier,
     icon: Painter,
-    contentDescription: String,
     backgroundColor: Color,
-    iconTint: Color = MaterialTheme.colorScheme.surface, // TODO будет зависеть от темы
+    contentDescription: String,
+    modifier: Modifier = Modifier,
+    iconTint: Color = MaterialTheme.colorScheme.surface,
     iconSize: Dp = 24.dp,
     onClick: (() -> Unit)? = null,
 ) {
-    val boxModifier = modifier
-        .size(30.dp)
-        .clip(RoundedCornerShape(8.dp))
-        .background(color = backgroundColor)
+    val boxModifier =
+        modifier
+            .size(30.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(color = backgroundColor)
 
-    val finalModifier = if (onClick != null) {
-        boxModifier.clickable(
-            onClick = onClick,
-            indication = ripple(bounded = true),
-            interactionSource = remember { MutableInteractionSource() }
-        )
-    } else {
-        boxModifier
-    }
+    val finalModifier =
+        if (onClick != null) {
+            boxModifier.clickable(
+                onClick = onClick,
+                indication = ripple(bounded = true),
+                interactionSource = remember { MutableInteractionSource() },
+            )
+        } else {
+            boxModifier
+        }
 
     Box(
         modifier = finalModifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             painter = icon,
             contentDescription = contentDescription,
             modifier = Modifier.size(iconSize),
-            tint = iconTint
+            tint = iconTint,
         )
     }
 }
 
 @Composable
 @Preview
-fun PreviewAppBarIcon() {
+private fun PreviewAppBarIcon() {
     AppBarIcon(
         icon = painterResource(android.R.drawable.ic_menu_edit),
         contentDescription = "Preview icon",
         backgroundColor = RuStoreCustomBlue,
-        onClick = { }
+        onClick = { },
     )
 }

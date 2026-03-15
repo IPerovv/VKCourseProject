@@ -34,17 +34,15 @@ import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @Composable
 fun AppListItem(
-    modifier: Modifier = Modifier,
     app: AppListItem,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
-
         VerticalSpacer(height = FangWidth)
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-
             AppIcon(iconUrl = app.iconUrl)
 
             HorizontalSpacer(width = PaddingLarge)
@@ -52,7 +50,7 @@ fun AppListItem(
             AppTextInfo(
                 name = app.name,
                 slogan = app.slogan,
-                category = app.category
+                category = app.category,
             )
         }
         VerticalSpacer(height = (FangWidth - 1.dp))
@@ -62,30 +60,31 @@ fun AppListItem(
 
 @Composable
 private fun AppIcon(
-    modifier: Modifier = Modifier,
     iconUrl: String,
+    modifier: Modifier = Modifier,
     size: Dp = 75.dp,
-    shape: Shape = RoundedCornerShape(16.dp)
+    shape: Shape = RoundedCornerShape(16.dp),
 ) {
-
     val isPreview = LocalInspectionMode.current
 
     if (isPreview) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_background),
             contentDescription = null,
-            modifier = modifier
-                .size(size)
-                .clip(shape)
+            modifier =
+                modifier
+                    .size(size)
+                    .clip(shape),
         )
     } else {
         AsyncImage(
             model = iconUrl,
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = modifier
-                .size(size)
-                .clip(shape)
+            modifier =
+                modifier
+                    .size(size)
+                    .clip(shape),
         )
     }
 }
@@ -95,38 +94,39 @@ private fun AppTextInfo(
     name: String,
     slogan: String,
     category: AppCategory,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
         Text(
             text = name,
             style = RuStoreTypography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            maxLines = 1
+            maxLines = 1,
         )
         VerticalSpacer(height = PaddingSmall)
         Text(
             text = slogan,
             style = RuStoreTypography.bodyMedium,
             fontWeight = FontWeight.Medium,
-            maxLines = 1
+            maxLines = 1,
         )
         VerticalSpacer(height = PaddingSmall)
         Text(
             text = getCategoryText(category),
             style = RuStoreTypography.bodySmall,
             fontWeight = FontWeight.ExtraLight,
-            maxLines = 1
+            maxLines = 1,
         )
     }
 }
 
-private val sampleApp = AppListItem(
-    name = "Гильдия Героев: Экшен",
-    category = AppCategory.GAME,
-    iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
-    slogan = "Легендарный рейд героев"
-)
+private val sampleApp =
+    AppListItem(
+        name = "Гильдия Героев: Экшен",
+        category = AppCategory.GAME,
+        iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
+        slogan = "Легендарный рейд героев",
+    )
 
 @Preview(name = "AppListItem Preview", showBackground = true)
 @Composable
