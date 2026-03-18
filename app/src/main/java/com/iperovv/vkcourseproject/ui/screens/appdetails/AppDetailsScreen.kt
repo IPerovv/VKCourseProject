@@ -1,6 +1,8 @@
 package com.iperovv.vkcourseproject.ui.screens.appdetails
 
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -9,37 +11,95 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.iperovv.vkcourseproject.R
-import com.iperovv.vkcourseproject.domain.AppCategory
 import com.iperovv.vkcourseproject.domain.DetailedApp
+import com.iperovv.vkcourseproject.ui.common.component.ErrorPlaceholder
+import com.iperovv.vkcourseproject.ui.screens.appdetails.component.AppDescription
+import com.iperovv.vkcourseproject.ui.screens.appdetails.component.AppDetailsHeader
+import com.iperovv.vkcourseproject.ui.screens.appdetails.component.Developer
+import com.iperovv.vkcourseproject.ui.screens.appdetails.component.InstallButton
+import com.iperovv.vkcourseproject.ui.screens.appdetails.component.ScreenshotsList
+import com.iperovv.vkcourseproject.ui.screens.appdetails.component.Toolbar
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @Composable
 fun AppDetailsScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: AppDetailsScreenViewModel = viewModel(),
 ) {
-    val app = remember { getApp() }
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
+    when (val currentState = state) {
+        is AppDetailsScreenState.Error ->
+
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center,
+            ) {
+                ErrorPlaceholder(
+                    modifier = Modifier.padding(16.dp),
+                    title = currentState.error ?: stringResource(R.string.an_error_occured),
+                    onRetry = { },
+                    description = null,
+                )
+            }
+
+        is AppDetailsScreenState.Loading -> {
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
+        is AppDetailsScreenState.Success ->
+            AppDetailsContent(
+                onNavigateBack = onNavigateBack,
+                modifier = modifier,
+                app = currentState.detailedApp,
+            )
+    }
+}
+
+@Composable
+private fun AppDetailsContent(
+    onNavigateBack: () -> Unit,
+    app: DetailedApp,
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
     val underDevelopmentText = stringResource(R.string.under_developement)
 
-    var descriptionCollapsed by remember { mutableStateOf(false) }
+    var descriptionCollapsed by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier = modifier.statusBarsPadding(),
+        modifier =
+            modifier
+                .statusBarsPadding(),
     ) {
         Toolbar(
             onBackClick = {
@@ -74,7 +134,7 @@ fun AppDetailsScreen(
             description = app.description,
             collapsed = descriptionCollapsed,
             onReadMoreClick = {
-                descriptionCollapsed = true
+                { descriptionCollapsed = true }
             },
             modifier =
                 Modifier
@@ -99,25 +159,6 @@ fun AppDetailsScreen(
         )
     }
 }
-
-// В будущем заменим этот метод на вызов API.
-private fun getApp(): DetailedApp =
-    DetailedApp(
-        name = "Гильдия Героев: Экшен ММО РПГ",
-        developer = "VK Play",
-        category = AppCategory.GAME,
-        ageRating = 12,
-        size = 223.7f,
-        screenshotUrlList =
-            listOf(
-                "https://static.rustore.ru/imgproxy/-y8kd-4B6MQ-1OKbAbnoAIMZAzvoMMG9dSiHMpFaTBc/preset:web_scr_lnd_335/plain/https://static.rustore.ru/apk/393868735/content/SCREENSHOT/dfd33017-e90d-4990-aa8c-6f159d546788.jpg@webp",
-                "https://static.rustore.ru/imgproxy/dZCvNtRKKFpzOmGlTxLszUPmwi661IhXynYZGsJQvLw/preset:web_scr_lnd_335/plain/https://static.rustore.ru/apk/393868735/content/SCREENSHOT/60ec4cbc-dcf6-4e69-aa6f-cc2da7de1af6.jpg@webp",
-                "https://static.rustore.ru/imgproxy/g5whSI1uNqaL2TUO7TFfM8M63vXpWXNCm2vlX4Ahvc4/preset:web_scr_lnd_335/plain/https://static.rustore.ru/apk/393868735/content/SCREENSHOT/c2dde8bc-c4ab-482a-80a5-2789149f598d.jpg@webp",
-                "https://static.rustore.ru/imgproxy/TjeurtC7BczOVJt74XhjGYuQnG1l4rx6zpDqyMb00GY/preset:web_scr_lnd_335/plain/https://static.rustore.ru/apk/393868735/content/SCREENSHOT/08318f76-7a9c-43aa-b4a7-1aa878d00861.jpg@webp",
-            ),
-        iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
-        description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
-    )
 
 @Preview
 @Composable

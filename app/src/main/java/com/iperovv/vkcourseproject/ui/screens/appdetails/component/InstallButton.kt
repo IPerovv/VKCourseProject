@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.ui.screens.appdetails
+package com.iperovv.vkcourseproject.ui.screens.appdetails.component
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
