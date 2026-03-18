@@ -1,7 +1,9 @@
 package com.iperovv.vkcourseproject.ui.screens.applist
 
+import androidx.compose.runtime.Immutable
 import com.iperovv.vkcourseproject.domain.AppListItem
 
+@Immutable
 sealed interface AppListScreenState {
     data object Loading : AppListScreenState
 
