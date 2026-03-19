@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.ui.screens.appdetails
+package com.iperovv.vkcourseproject.ui.screens.appdetailed
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -28,26 +28,26 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.iperovv.vkcourseproject.R
-import com.iperovv.vkcourseproject.domain.DetailedApp
+import com.iperovv.vkcourseproject.domain.model.AppDetailed
 import com.iperovv.vkcourseproject.ui.common.component.ErrorPlaceholder
-import com.iperovv.vkcourseproject.ui.screens.appdetails.component.AppDescription
-import com.iperovv.vkcourseproject.ui.screens.appdetails.component.AppDetailsHeader
-import com.iperovv.vkcourseproject.ui.screens.appdetails.component.Developer
-import com.iperovv.vkcourseproject.ui.screens.appdetails.component.InstallButton
-import com.iperovv.vkcourseproject.ui.screens.appdetails.component.ScreenshotsList
-import com.iperovv.vkcourseproject.ui.screens.appdetails.component.Toolbar
+import com.iperovv.vkcourseproject.ui.screens.appdetailed.component.AppDescription
+import com.iperovv.vkcourseproject.ui.screens.appdetailed.component.AppDetailedHeader
+import com.iperovv.vkcourseproject.ui.screens.appdetailed.component.Developer
+import com.iperovv.vkcourseproject.ui.screens.appdetailed.component.InstallButton
+import com.iperovv.vkcourseproject.ui.screens.appdetailed.component.ScreenshotsList
+import com.iperovv.vkcourseproject.ui.screens.appdetailed.component.Toolbar
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @Composable
-fun AppDetailsScreen(
+fun AppDetailedScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AppDetailsScreenViewModel = viewModel(),
+    viewModel: AppDetailedScreenViewModel = viewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (val currentState = state) {
-        is AppDetailsScreenState.Error ->
+        is AppDetailedScreenState.Error ->
 
             Box(
                 modifier =
@@ -64,7 +64,7 @@ fun AppDetailsScreen(
                 )
             }
 
-        is AppDetailsScreenState.Loading -> {
+        is AppDetailedScreenState.Loading -> {
             Box(
                 modifier =
                     Modifier
@@ -76,19 +76,19 @@ fun AppDetailsScreen(
             }
         }
 
-        is AppDetailsScreenState.Success ->
-            AppDetailsContent(
+        is AppDetailedScreenState.Success ->
+            AppDetailedContent(
                 onNavigateBack = onNavigateBack,
                 modifier = modifier,
-                app = currentState.detailedApp,
+                app = currentState.appDetailed,
             )
     }
 }
 
 @Composable
-private fun AppDetailsContent(
+private fun AppDetailedContent(
     onNavigateBack: () -> Unit,
-    app: DetailedApp,
+    app: AppDetailed,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -110,7 +110,7 @@ private fun AppDetailsContent(
             },
         )
         Spacer(Modifier.height(8.dp))
-        AppDetailsHeader(
+        AppDetailedHeader(
             app = app,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
@@ -134,7 +134,7 @@ private fun AppDetailsContent(
             description = app.description,
             collapsed = descriptionCollapsed,
             onReadMoreClick = {
-                { descriptionCollapsed = true }
+                descriptionCollapsed = true
             },
             modifier =
                 Modifier
@@ -164,7 +164,7 @@ private fun AppDetailsContent(
 @Composable
 private fun Preview() {
     VKCourseProjectTheme {
-        AppDetailsScreen(
+        AppDetailedScreen(
             onNavigateBack = { },
             modifier = Modifier.fillMaxSize(),
         )

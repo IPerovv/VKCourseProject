@@ -3,7 +3,7 @@ package com.iperovv.vkcourseproject.ui.common.util
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.iperovv.vkcourseproject.R
-import com.iperovv.vkcourseproject.domain.AppCategory
+import com.iperovv.vkcourseproject.domain.model.AppCategory
 
 @Composable
 fun getCategoryText(category: AppCategory): String =

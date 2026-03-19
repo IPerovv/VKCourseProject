@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.ui.screens.appdetails.component
+package com.iperovv.vkcourseproject.ui.screens.appdetailed.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

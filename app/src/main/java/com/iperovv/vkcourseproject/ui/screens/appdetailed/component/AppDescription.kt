@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.ui.screens.appdetails.component
+package com.iperovv.vkcourseproject.ui.screens.appdetailed.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +24,7 @@ fun AppDescription(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
-        Text(text = stringResource(R.string.app_details_description))
+        Text(text = stringResource(R.string.app_detailed_description))
         Spacer(Modifier.height(8.dp))
         Text(
             text = description,
@@ -37,7 +37,7 @@ fun AppDescription(
                 contentPadding = PaddingValues(horizontal = 0.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.app_details_read_more),
+                    text = stringResource(R.string.app_detailed_read_more),
                     color = MaterialTheme.colorScheme.primary,
                 )
             }

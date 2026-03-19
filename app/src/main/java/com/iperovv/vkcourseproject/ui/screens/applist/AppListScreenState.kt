@@ -1,7 +1,7 @@
 package com.iperovv.vkcourseproject.ui.screens.applist
 
 import androidx.compose.runtime.Immutable
-import com.iperovv.vkcourseproject.domain.AppListItem
+import com.iperovv.vkcourseproject.domain.model.AppSummary
 
 @Immutable
 sealed interface AppListScreenState {
@@ -12,6 +12,6 @@ sealed interface AppListScreenState {
     ) : AppListScreenState
 
     data class Success(
-        val appList: List<AppListItem>,
+        val appList: List<AppSummary>,
     ) : AppListScreenState
 }
