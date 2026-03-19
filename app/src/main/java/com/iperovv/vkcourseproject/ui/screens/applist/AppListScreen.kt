@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.iperovv.vkcourseproject.R
 import com.iperovv.vkcourseproject.domain.model.AppSummary
@@ -41,7 +42,7 @@ import kotlinx.coroutines.launch
 fun AppListScreen(
     onAppClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AppListScreenViewModel = viewModel(),
+    viewModel: AppListScreenViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
