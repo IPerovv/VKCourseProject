@@ -6,6 +6,7 @@ import com.iperovv.vkcourseproject.domain.model.AppDetailed
 class AppDetailedMapper {
     fun fromDto(dto: AppDetailedDto): AppDetailed =
         AppDetailed(
+            id = dto.id,
             name = dto.name,
             developer = dto.developer,
             category = dto.category.toAppCategory(),

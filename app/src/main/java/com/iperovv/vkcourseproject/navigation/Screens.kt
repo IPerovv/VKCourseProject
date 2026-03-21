@@ -7,5 +7,7 @@ sealed class Screen {
     data object AppListScreen : Screen()
 
     @Serializable
-    data object AppDetailedScreen : Screen()
+    data class AppDetailedScreen(
+        val appId: String,
+    ) : Screen()
 }

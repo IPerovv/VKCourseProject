@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.di
+package com.iperovv.vkcourseproject.data.remote.mapper.di
 
 import com.iperovv.vkcourseproject.data.remote.mapper.AppDetailedMapper
 import com.iperovv.vkcourseproject.data.remote.mapper.AppSummaryMapper
