@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.ui.screens.appdetails.component
+package com.iperovv.vkcourseproject.ui.screens.appdetailed.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,7 +29,7 @@ fun ScreenshotsList(
 ) {
     Column(modifier) {
         Text(
-            text = stringResource(R.string.app_details_screenshots),
+            text = stringResource(R.string.app_detailed_screenshots),
             modifier = Modifier.padding(contentPadding),
         )
         Spacer(Modifier.height(8.dp))

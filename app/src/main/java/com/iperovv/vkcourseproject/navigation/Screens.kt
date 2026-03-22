@@ -7,5 +7,5 @@ sealed class Screen {
     data object AppListScreen : Screen()
 
     @Serializable
-    data object AppDetailsScreen : Screen()
+    data object AppDetailedScreen : Screen()
 }

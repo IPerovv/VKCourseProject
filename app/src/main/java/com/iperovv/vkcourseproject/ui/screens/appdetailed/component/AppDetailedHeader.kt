@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.ui.screens.appdetails.component
+package com.iperovv.vkcourseproject.ui.screens.appdetailed.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -24,15 +24,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.iperovv.vkcourseproject.R
-import com.iperovv.vkcourseproject.domain.AppCategory
-import com.iperovv.vkcourseproject.domain.DetailedApp
+import com.iperovv.vkcourseproject.domain.model.AppCategory
+import com.iperovv.vkcourseproject.domain.model.AppDetailed
 import com.iperovv.vkcourseproject.ui.common.util.getCategoryText
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 import kotlin.math.roundToInt
 
 @Composable
-fun AppDetailsHeader(
-    app: DetailedApp,
+fun AppDetailedHeader(
+    app: AppDetailed,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -75,13 +75,13 @@ fun AppDetailsHeader(
                         modifier = Modifier.fillMaxWidth(),
                     )
                     Spacer(Modifier.height(4.dp))
-                    Text(text = stringResource(R.string.app_details_age))
+                    Text(text = stringResource(R.string.app_detailed_age))
                 }
                 Spacer(Modifier.width(12.dp))
                 Column {
                     Text(text = "${app.size.roundToInt()} MB")
                     Spacer(Modifier.height(4.dp))
-                    Text(text = stringResource(R.string.app_details_size))
+                    Text(text = stringResource(R.string.app_detailed_size))
                 }
             }
         }
@@ -92,7 +92,7 @@ fun AppDetailsHeader(
 @Composable
 private fun Preview() {
     val app =
-        DetailedApp(
+        AppDetailed(
             name = "Гильдия Героев: Экшен ММО РПГ",
             developer = "VK Play",
             category = AppCategory.GAME,
@@ -109,6 +109,6 @@ private fun Preview() {
             description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
         )
     VKCourseProjectTheme {
-        AppDetailsHeader(app = app, modifier = Modifier.fillMaxWidth())
+        AppDetailedHeader(app = app, modifier = Modifier.fillMaxWidth())
     }
 }

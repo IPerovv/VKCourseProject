@@ -1,9 +1,9 @@
-package com.iperovv.vkcourseproject.domain
+package com.iperovv.vkcourseproject.data.remote.model
 
-data class DetailedApp(
+data class AppDetailedDto(
     val name: String,
     val developer: String,
-    val category: AppCategory,
+    val category: String,
     val ageRating: Int,
     val size: Float,
     val iconUrl: String,

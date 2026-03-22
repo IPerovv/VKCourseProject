@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.ui.screens.appdetails.component
+package com.iperovv.vkcourseproject.ui.screens.appdetailed.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,7 @@ fun Developer(
     ) {
         Column {
             Text(text = name)
-            Text(text = stringResource(R.string.app_details_developer))
+            Text(text = stringResource(R.string.app_detailed_developer))
         }
         IconButton(onClick = onClick) {
             Icon(

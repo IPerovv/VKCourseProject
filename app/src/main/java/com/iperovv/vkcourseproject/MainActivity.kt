@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.iperovv.vkcourseproject.navigation.Screen
-import com.iperovv.vkcourseproject.ui.screens.appdetails.AppDetailsScreen
+import com.iperovv.vkcourseproject.ui.screens.appdetailed.AppDetailedScreen
 import com.iperovv.vkcourseproject.ui.screens.applist.AppListScreen
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
@@ -26,12 +26,12 @@ class MainActivity : ComponentActivity() {
                     composable<Screen.AppListScreen> {
                         AppListScreen(
                             onAppClick = {
-                                navController.navigate(Screen.AppDetailsScreen)
+                                navController.navigate(Screen.AppDetailedScreen)
                             },
                         )
                     }
-                    composable<Screen.AppDetailsScreen> {
-                        AppDetailsScreen(
+                    composable<Screen.AppDetailedScreen> {
+                        AppDetailedScreen(
                             onNavigateBack = { navController.popBackStack() },
                         )
                     }

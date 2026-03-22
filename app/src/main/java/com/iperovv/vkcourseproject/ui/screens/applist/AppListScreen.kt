@@ -24,8 +24,6 @@ import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListTopAppBar
 import com.iperovv.vkcourseproject.ui.theme.FangHeight
 import com.iperovv.vkcourseproject.ui.theme.PaddingLarge
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
-import com.iperovv.vkcourseproject.domain.AppListItem as AppListItemDomainModel
-import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListItem as AppListItemComp
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -34,7 +32,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.iperovv.vkcourseproject.R
+import com.iperovv.vkcourseproject.domain.model.AppSummary
 import com.iperovv.vkcourseproject.ui.common.component.ErrorPlaceholder
+import com.iperovv.vkcourseproject.ui.screens.applist.component.AppListItem
 import kotlinx.coroutines.launch
 
 @Composable
@@ -118,12 +118,12 @@ fun AppListScreen(
 @Composable
 private fun Content(
     onAppClick: () -> Unit,
-    apps: List<AppListItemDomainModel>,
+    apps: List<AppSummary>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(apps) { app ->
-            AppListItemComp(
+            AppListItem(
                 app = app,
                 modifier =
                     Modifier

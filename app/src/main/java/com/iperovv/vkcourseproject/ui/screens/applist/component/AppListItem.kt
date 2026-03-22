@@ -18,10 +18,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.iperovv.vkcourseproject.R
-import com.iperovv.vkcourseproject.domain.AppCategory
-import com.iperovv.vkcourseproject.domain.AppListItem
+import com.iperovv.vkcourseproject.domain.model.AppCategory
+import com.iperovv.vkcourseproject.domain.model.AppSummary
+import com.iperovv.vkcourseproject.ui.common.component.AppImagePlaceholder
 import com.iperovv.vkcourseproject.ui.common.component.HorizontalDivider
 import com.iperovv.vkcourseproject.ui.common.spacer.HorizontalSpacer
 import com.iperovv.vkcourseproject.ui.common.spacer.VerticalSpacer
@@ -34,7 +35,7 @@ import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @Composable
 fun AppListItem(
-    app: AppListItem,
+    app: AppSummary,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -60,7 +61,7 @@ fun AppListItem(
 
 @Composable
 private fun AppIcon(
-    iconUrl: String,
+    iconUrl: String?,
     modifier: Modifier = Modifier,
     size: Dp = 75.dp,
     shape: Shape = RoundedCornerShape(16.dp),
@@ -77,7 +78,7 @@ private fun AppIcon(
                     .clip(shape),
         )
     } else {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = iconUrl,
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -85,6 +86,18 @@ private fun AppIcon(
                 modifier
                     .size(size)
                     .clip(shape),
+            error = {
+                AppImagePlaceholder(
+                    modifier = Modifier.size(size),
+                    error = true,
+                )
+            },
+            loading = {
+                AppImagePlaceholder(
+                    modifier = Modifier.size(size),
+                    error = false,
+                )
+            },
         )
     }
 }
@@ -92,7 +105,7 @@ private fun AppIcon(
 @Composable
 private fun AppTextInfo(
     name: String,
-    slogan: String,
+    slogan: String?,
     category: AppCategory,
     modifier: Modifier = Modifier,
 ) {
@@ -105,7 +118,7 @@ private fun AppTextInfo(
         )
         VerticalSpacer(height = PaddingSmall)
         Text(
-            text = slogan,
+            text = slogan ?: "",
             style = RuStoreTypography.bodyMedium,
             fontWeight = FontWeight.Medium,
             maxLines = 1,
@@ -121,14 +134,14 @@ private fun AppTextInfo(
 }
 
 private val sampleApp =
-    AppListItem(
+    AppSummary(
         name = "Гильдия Героев: Экшен",
         category = AppCategory.GAME,
         iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
         slogan = "Легендарный рейд героев",
     )
 
-@Preview(name = "AppListItem Preview", showBackground = true)
+@Preview(name = "AppSummary Preview", showBackground = true)
 @Composable
 private fun PreviewAppListItem() {
     VKCourseProjectTheme {
