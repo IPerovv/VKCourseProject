@@ -12,31 +12,29 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppDetailedScreenViewModel
-    @Inject
-    constructor(
-        private val appDetailedRepository: AppDetailedRepository,
-        savedStateHandle: SavedStateHandle,
-    ) : ViewModel() {
-        private val appId: String = checkNotNull(savedStateHandle["appId"])
+class AppDetailedScreenViewModel @Inject constructor(
+    private val appDetailedRepository: AppDetailedRepository,
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
+    private val appId: String = checkNotNull(savedStateHandle["appId"])
 
-        private val _state = MutableStateFlow<AppDetailedScreenState>(AppDetailedScreenState.Loading)
-        val state: StateFlow<AppDetailedScreenState> = _state.asStateFlow()
+    private val _state = MutableStateFlow<AppDetailedScreenState>(AppDetailedScreenState.Loading)
+    val state: StateFlow<AppDetailedScreenState> = _state.asStateFlow()
 
-        init {
-            loadApp()
-        }
+    init {
+        loadApp()
+    }
 
-        fun loadApp() {
-            viewModelScope.launch {
-                _state.value = AppDetailedScreenState.Loading
-                runCatching {
-                    val app = appDetailedRepository.getDetailedApp(appId)
-                    _state.value = AppDetailedScreenState.Success(app)
-                }.onFailure {
-                    // TODO Знаю, что это нечеловекочитаемо, но пусть временно будет так
-                    _state.value = AppDetailedScreenState.Error(it.message)
-                }
+    fun loadApp() {
+        viewModelScope.launch {
+            _state.value = AppDetailedScreenState.Loading
+            runCatching {
+                val app = appDetailedRepository.getDetailedApp(appId)
+                _state.value = AppDetailedScreenState.Success(app)
+            }.onFailure {
+                // TODO Знаю, что это нечеловекочитаемо, но пусть временно будет так
+                _state.value = AppDetailedScreenState.Error(it.message)
             }
         }
     }
+}
