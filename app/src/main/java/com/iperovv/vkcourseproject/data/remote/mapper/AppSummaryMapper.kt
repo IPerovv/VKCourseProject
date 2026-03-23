@@ -6,8 +6,9 @@ import com.iperovv.vkcourseproject.domain.model.AppSummary
 class AppSummaryMapper {
     fun fromDto(dto: AppSummaryDto): AppSummary =
         AppSummary(
+            id = dto.id,
             name = dto.name,
-            slogan = dto.slogan,
+            description = dto.description,
             category = dto.category.toAppCategory(),
             iconUrl = dto.iconUrl,
         )

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.iperovv.vkcourseproject.R
+import com.iperovv.vkcourseproject.ui.common.preview.PreviewData
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @Composable
@@ -45,7 +46,7 @@ fun Developer(
 private fun Preview() {
     VKCourseProjectTheme {
         Developer(
-            name = "VK Play",
+            name = PreviewData.name,
             onClick = {},
             modifier = Modifier.fillMaxWidth(),
         )

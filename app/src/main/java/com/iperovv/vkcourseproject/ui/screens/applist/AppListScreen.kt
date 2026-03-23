@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.iperovv.vkcourseproject.R
 import com.iperovv.vkcourseproject.domain.model.AppSummary
@@ -39,9 +40,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AppListScreen(
-    onAppClick: () -> Unit,
+    onAppClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AppListScreenViewModel = viewModel(),
+    viewModel: AppListScreenViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -84,7 +85,7 @@ fun AppListScreen(
                     ErrorPlaceholder(
                         modifier = Modifier.padding(16.dp),
                         title = currentState.error ?: stringResource(R.string.an_error_occured),
-                        onRetry = { },
+                        onRetry = { viewModel.onRetry() },
                         description = null,
                     )
                 }
@@ -117,7 +118,7 @@ fun AppListScreen(
 
 @Composable
 private fun Content(
-    onAppClick: () -> Unit,
+    onAppClick: (String) -> Unit,
     apps: List<AppSummary>,
     modifier: Modifier = Modifier,
 ) {
@@ -128,7 +129,7 @@ private fun Content(
                 modifier =
                     Modifier
                         .clickable(
-                            onClick = { onAppClick() },
+                            onClick = { onAppClick(app.id) },
                             indication = ripple(bounded = true),
                             interactionSource = remember { MutableInteractionSource() },
                         ).padding(horizontal = PaddingLarge),

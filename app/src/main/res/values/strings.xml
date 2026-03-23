@@ -3,6 +3,23 @@
 
     <string name="category_app">Приложения</string>
     <string name="category_game">Игры</string>
+    <string name="category_photo_and_video">Фото и видео</string>
+    <string name="category_productivity">Продуктивность</string>
+    <string name="category_food_and_drink">Еда и напитки</string>
+    <string name="category_education">Образование</string>
+    <string name="category_lifestyle">Стиль жизни</string>
+    <string name="category_shopping">Покупки</string>
+    <string name="category_news">Новости</string>
+    <string name="category_music">Музыка</string>
+    <string name="category_finance">Финансы</string>
+    <string name="category_utilities">Инструменты</string>
+    <string name="category_navigation">Навигация</string>
+    <string name="category_communication">Связь</string>
+    <string name="category_business">Бизнес</string>
+    <string name="category_weather">Погода</string>
+    <string name="category_entertainment">Развлечения</string>
+    <string name="category_books_and_reference">Книги и справочники</string>
+    <string name="category_health_and_fitness">Здоровье и фитнес</string>
 
     <string name="app_detailed_age">Возраст</string>
     <string name="app_detailed_size">Размер</string>

@@ -1,6 +1,7 @@
 package com.iperovv.vkcourseproject.domain.model
 
 data class AppDetailed(
+    val id: String,
     val name: String,
     val developer: String,
     val category: AppCategory,

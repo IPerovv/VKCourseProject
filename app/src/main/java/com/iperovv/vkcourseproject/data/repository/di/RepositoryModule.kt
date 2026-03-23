@@ -1,0 +1,23 @@
+package com.iperovv.vkcourseproject.data.repository.di
+
+import com.iperovv.vkcourseproject.data.repository.AppDetailedRepositoryImpl
+import com.iperovv.vkcourseproject.data.repository.AppSummaryRepositoryImpl
+import com.iperovv.vkcourseproject.domain.AppDetailedRepository
+import com.iperovv.vkcourseproject.domain.AppSummaryRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+    @Binds
+    @Singleton
+    abstract fun bindAppDetailedRepository(impl: AppDetailedRepositoryImpl): AppDetailedRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAppSummaryRepository(impl: AppSummaryRepositoryImpl): AppSummaryRepository
+}

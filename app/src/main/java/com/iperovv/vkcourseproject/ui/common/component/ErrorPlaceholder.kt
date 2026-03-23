@@ -80,7 +80,7 @@ fun ErrorPlaceholder(
             VerticalSpacer(24.dp)
 
             Button(
-                onClick = onRetry,
+                onClick = { onRetry() },
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.retry))
