@@ -11,7 +11,9 @@ import com.iperovv.vkcourseproject.navigation.Screen
 import com.iperovv.vkcourseproject.ui.screens.appdetailed.AppDetailedScreen
 import com.iperovv.vkcourseproject.ui.screens.applist.AppListScreen
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +27,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable<Screen.AppListScreen> {
                         AppListScreen(
-                            onAppClick = {
-                                navController.navigate(Screen.AppDetailedScreen)
+                            onAppClick = { appId ->
+                                navController.navigate(Screen.AppDetailedScreen(appId))
                             },
                         )
                     }

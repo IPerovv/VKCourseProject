@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iperovv.vkcourseproject.R
+import com.iperovv.vkcourseproject.ui.common.preview.PreviewData
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
 
 @Composable
@@ -50,7 +51,7 @@ fun AppDescription(
 private fun PreviewShort() {
     VKCourseProjectTheme {
         AppDescription(
-            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
+            description = PreviewData.descriptionLong,
             onReadMoreClick = {},
             collapsed = false,
         )
@@ -62,7 +63,7 @@ private fun PreviewShort() {
 private fun PreviewCollapsed() {
     VKCourseProjectTheme {
         AppDescription(
-            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
+            description = PreviewData.descriptionLong,
             onReadMoreClick = {},
             collapsed = true,
         )

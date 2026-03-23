@@ -1,6 +1,10 @@
 package com.iperovv.vkcourseproject.data.remote.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AppDetailedDto(
+    val id: String,
     val name: String,
     val developer: String,
     val category: String,
