@@ -11,39 +11,37 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppListScreenViewModel
-    @Inject
-    constructor(
-        private val appSummaryRepository: AppSummaryRepository,
-    ) : ViewModel() {
-        private val _state = MutableStateFlow<AppListScreenState>(AppListScreenState.Loading)
-        val state: StateFlow<AppListScreenState> = _state.asStateFlow()
+class AppListScreenViewModel @Inject constructor(
+    private val appSummaryRepository: AppSummaryRepository,
+) : ViewModel() {
+    private val _state = MutableStateFlow<AppListScreenState>(AppListScreenState.Loading)
+    val state: StateFlow<AppListScreenState> = _state.asStateFlow()
 
-        private val _isSnackShown = MutableStateFlow<Boolean>(false)
-        val isSnackShown: StateFlow<Boolean> = _isSnackShown
+    private val _isSnackShown = MutableStateFlow<Boolean>(false)
+    val isSnackShown: StateFlow<Boolean> = _isSnackShown
 
-        init {
-            loadApps()
-        }
+    init {
+        loadApps()
+    }
 
-        fun onSnackShown() {
-            _isSnackShown.value = true
-        }
+    fun onSnackShown() {
+        _isSnackShown.value = true
+    }
 
-        fun onRetry() {
-            loadApps()
-        }
+    fun onRetry() {
+        loadApps()
+    }
 
-        fun loadApps() {
-            viewModelScope.launch {
-                _state.value = AppListScreenState.Loading
-                runCatching {
-                    val apps = appSummaryRepository.getApps()
-                    _state.value = AppListScreenState.Success(apps)
-                }.onFailure {
-                    // TODO Знаю, что это нечеловекочитаемо, но пусть временно будет так
-                    _state.value = AppListScreenState.Error(it.message)
-                }
+    fun loadApps() {
+        viewModelScope.launch {
+            _state.value = AppListScreenState.Loading
+            runCatching {
+                val apps = appSummaryRepository.getApps()
+                _state.value = AppListScreenState.Success(apps)
+            }.onFailure {
+                // TODO Знаю, что это нечеловекочитаемо, но пусть временно будет так
+                _state.value = AppListScreenState.Error(it.message)
             }
         }
     }
+}
