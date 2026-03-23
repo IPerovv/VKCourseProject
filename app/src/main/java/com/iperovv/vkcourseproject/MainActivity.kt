@@ -27,8 +27,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable<Screen.AppListScreen> {
                         AppListScreen(
-                            onAppClick = {
-                                navController.navigate(Screen.AppDetailedScreen)
+                            onAppClick = { appId ->
+                                navController.navigate(Screen.AppDetailedScreen(appId))
                             },
                         )
                     }

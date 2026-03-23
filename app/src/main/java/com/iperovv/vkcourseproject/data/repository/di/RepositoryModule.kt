@@ -1,7 +1,7 @@
-package com.iperovv.vkcourseproject.di
+package com.iperovv.vkcourseproject.data.repository.di
 
-import com.iperovv.vkcourseproject.data.AppDetailedRepositoryImpl
-import com.iperovv.vkcourseproject.data.AppSummaryRepositoryImpl
+import com.iperovv.vkcourseproject.data.repository.AppDetailedRepositoryImpl
+import com.iperovv.vkcourseproject.data.repository.AppSummaryRepositoryImpl
 import com.iperovv.vkcourseproject.domain.AppDetailedRepository
 import com.iperovv.vkcourseproject.domain.AppSummaryRepository
 import dagger.Binds

@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.iperovv.vkcourseproject.R
 import com.iperovv.vkcourseproject.domain.model.AppDetailed
 import com.iperovv.vkcourseproject.ui.common.component.ErrorPlaceholder

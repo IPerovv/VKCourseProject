@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iperovv.vkcourseproject.domain.AppSummaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,11 +30,14 @@ class AppListScreenViewModel
             _isSnackShown.value = true
         }
 
+        fun onRetry() {
+            loadApps()
+        }
+
         fun loadApps() {
             viewModelScope.launch {
                 _state.value = AppListScreenState.Loading
                 runCatching {
-                    delay(2000L)
                     val apps = appSummaryRepository.getApps()
                     _state.value = AppListScreenState.Success(apps)
                 }.onFailure {

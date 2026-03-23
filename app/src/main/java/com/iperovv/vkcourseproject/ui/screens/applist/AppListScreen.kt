@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AppListScreen(
-    onAppClick: () -> Unit,
+    onAppClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AppListScreenViewModel = hiltViewModel(),
 ) {
@@ -85,7 +85,7 @@ fun AppListScreen(
                     ErrorPlaceholder(
                         modifier = Modifier.padding(16.dp),
                         title = currentState.error ?: stringResource(R.string.an_error_occured),
-                        onRetry = { },
+                        onRetry = { viewModel.onRetry() },
                         description = null,
                     )
                 }
@@ -118,7 +118,7 @@ fun AppListScreen(
 
 @Composable
 private fun Content(
-    onAppClick: () -> Unit,
+    onAppClick: (String) -> Unit,
     apps: List<AppSummary>,
     modifier: Modifier = Modifier,
 ) {
@@ -129,7 +129,7 @@ private fun Content(
                 modifier =
                     Modifier
                         .clickable(
-                            onClick = { onAppClick() },
+                            onClick = { onAppClick(app.id) },
                             indication = ripple(bounded = true),
                             interactionSource = remember { MutableInteractionSource() },
                         ).padding(horizontal = PaddingLarge),
