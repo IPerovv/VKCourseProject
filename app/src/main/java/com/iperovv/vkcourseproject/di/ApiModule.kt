@@ -1,5 +1,6 @@
-package com.iperovv.vkcourseproject.data.remote.api
+package com.iperovv.vkcourseproject.di
 
+import com.iperovv.vkcourseproject.data.remote.api.AppsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

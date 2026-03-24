@@ -1,5 +1,6 @@
-package com.iperovv.vkcourseproject.data.remote.network
+package com.iperovv.vkcourseproject.di
 
+import com.iperovv.vkcourseproject.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +13,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import com.iperovv.vkcourseproject.BuildConfig
 
 @Module
 @InstallIn(SingletonComponent::class)
