@@ -45,6 +45,13 @@ android {
     buildFeatures {
         compose = true
     }
+    configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            substitute(module("com.intellij:annotations"))
+                .using(module("org.jetbrains:annotations:23.0.0"))
+                .because("Unify JetBrains annotations and avoid duplicate classes")
+        }
+    }
 }
 
 ktlint {

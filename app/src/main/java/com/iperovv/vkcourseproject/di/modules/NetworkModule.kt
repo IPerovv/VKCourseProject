@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.di
+package com.iperovv.vkcourseproject.di.modules
 
 import com.iperovv.vkcourseproject.BuildConfig
 import dagger.Module

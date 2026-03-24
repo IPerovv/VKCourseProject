@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.di
+package com.iperovv.vkcourseproject.di.modules
 
 import com.iperovv.vkcourseproject.data.remote.api.AppsApi
 import dagger.Module
