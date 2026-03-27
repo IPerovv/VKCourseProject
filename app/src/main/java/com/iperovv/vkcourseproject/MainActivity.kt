@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.iperovv.vkcourseproject.navigation.Screen
+import com.iperovv.vkcourseproject.navigation.Screens
 import com.iperovv.vkcourseproject.ui.screens.appdetailed.AppDetailedScreen
 import com.iperovv.vkcourseproject.ui.screens.applist.AppListScreen
 import com.iperovv.vkcourseproject.ui.theme.VKCourseProjectTheme
@@ -23,16 +23,16 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.AppListScreen,
+                    startDestination = Screens.AppListScreens,
                 ) {
-                    composable<Screen.AppListScreen> {
+                    composable<Screens.AppListScreens> {
                         AppListScreen(
                             onAppClick = { appId ->
-                                navController.navigate(Screen.AppDetailedScreen(appId))
+                                navController.navigate(Screens.AppDetailedScreens(appId))
                             },
                         )
                     }
-                    composable<Screen.AppDetailedScreen> {
+                    composable<Screens.AppDetailedScreens> {
                         AppDetailedScreen(
                             onNavigateBack = { navController.popBackStack() },
                         )

@@ -2,12 +2,12 @@ package com.iperovv.vkcourseproject.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed class Screen {
+sealed class Screens {
     @Serializable
-    data object AppListScreen : Screen()
+    data object AppListScreens : Screens()
 
     @Serializable
-    data class AppDetailedScreen(
+    data class AppDetailedScreens(
         val appId: String,
-    ) : Screen()
+    ) : Screens()
 }
