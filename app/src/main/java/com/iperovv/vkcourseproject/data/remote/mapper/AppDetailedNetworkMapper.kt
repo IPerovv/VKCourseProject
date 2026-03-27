@@ -1,10 +1,11 @@
 package com.iperovv.vkcourseproject.data.remote.mapper
 
+import com.iperovv.vkcourseproject.data.remote.mapper.mapper.toAppCategory
 import com.iperovv.vkcourseproject.data.remote.model.AppDetailedDto
 import com.iperovv.vkcourseproject.domain.model.AppDetailed
 import javax.inject.Inject
 
-class AppDetailedMapper @Inject constructor() {
+class AppDetailedNetworkMapper @Inject constructor() {
     fun fromDto(dto: AppDetailedDto): AppDetailed =
         AppDetailed(
             id = dto.id,
