@@ -1,4 +1,4 @@
-package com.iperovv.vkcourseproject.data.repository.di
+package com.iperovv.vkcourseproject.di.modules
 
 import com.iperovv.vkcourseproject.data.repository.AppDetailedRepositoryImpl
 import com.iperovv.vkcourseproject.data.repository.AppSummaryRepositoryImpl

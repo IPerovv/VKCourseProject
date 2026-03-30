@@ -138,7 +138,7 @@ private fun Content(
     }
 }
 
-@Preview(name = "AppListScreen", showBackground = true)
+@Preview(name = "AppListScreens", showBackground = true)
 @Composable
 private fun PreviewAppListScreen() {
     VKCourseProjectTheme {
