@@ -35,6 +35,7 @@ object PreviewData {
             iconUrl = iconUrl,
             screenshotUrlList = screenshotUrls,
             description = descriptionLong,
+            isInWishlist = false,
         )
 
     val appSummary =

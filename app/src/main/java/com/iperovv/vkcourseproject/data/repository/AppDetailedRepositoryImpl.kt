@@ -20,12 +20,16 @@ class AppDetailedRepositoryImpl @Inject constructor(
     private val appDetailedDatabaseMapper: AppDetailedDatabaseMapper,
     private val dispatchers: CoroutineDispatchers,
 ) : AppDetailedRepository {
-    override suspend fun toggleWishlist(id: String) {
+    override suspend fun toggleWishlist(appId: String) {
+        val currentData = appDetailedDao.getAppById(appId)
+        currentData?.let {
+            appDetailedDao.updateWishlistStatus(appId, !currentData.isInWishlist)
+        }
     }
 
-    override fun observeAppDetailed(id: String): Flow<AppDetailed> =
+    override fun observeAppDetailed(appId: String): Flow<AppDetailed> =
         appDetailedDao
-            .observeAppById(id)
+            .observeAppById(appId)
             .filterNotNull()
             .map {
                 appDetailedDatabaseMapper.fromEntity(it)
@@ -35,6 +39,22 @@ class AppDetailedRepositoryImpl @Inject constructor(
         val remoteAppDto = appsApi.getDetailedApp(appId)
         val remoteAppDomain = appDetailedNetworkMapper.fromDto(remoteAppDto)
         val remoteAppEntity = appDetailedDatabaseMapper.toEntity(remoteAppDomain)
-        appDetailedDao.insertApp(remoteAppEntity)
+
+        val localAppDetailed = appDetailedDao.getAppById(appId)
+        if (localAppDetailed != null) {
+            appDetailedDao.updateAppDetails(
+                id = remoteAppEntity.id,
+                name = remoteAppEntity.name,
+                developer = remoteAppEntity.developer,
+                category = remoteAppEntity.category,
+                ageRating = remoteAppEntity.ageRating,
+                size = remoteAppEntity.size,
+                iconUrl = remoteAppEntity.iconUrl,
+                screenshotUrlList = remoteAppEntity.screenshotUrlList,
+                description = remoteAppEntity.description,
+            )
+        } else {
+            appDetailedDao.insertApp(remoteAppEntity)
+        }
     }
 }

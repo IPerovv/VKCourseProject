@@ -17,5 +17,6 @@ class AppDetailedNetworkMapper @Inject constructor() {
             iconUrl = dto.iconUrl,
             screenshotUrlList = dto.screenshotUrlList,
             description = dto.description,
+            isInWishlist = false,
         )
 }
