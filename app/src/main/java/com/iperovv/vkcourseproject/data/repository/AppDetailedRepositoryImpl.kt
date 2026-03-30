@@ -7,7 +7,10 @@ import com.iperovv.vkcourseproject.data.remote.api.AppsApi
 import com.iperovv.vkcourseproject.data.remote.mapper.AppDetailedNetworkMapper
 import com.iperovv.vkcourseproject.domain.AppDetailedRepository
 import com.iperovv.vkcourseproject.domain.model.AppDetailed
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AppDetailedRepositoryImpl @Inject constructor(
@@ -17,20 +20,21 @@ class AppDetailedRepositoryImpl @Inject constructor(
     private val appDetailedDatabaseMapper: AppDetailedDatabaseMapper,
     private val dispatchers: CoroutineDispatchers,
 ) : AppDetailedRepository {
-    override suspend fun getDetailedApp(appId: String): AppDetailed {
-        return withContext(dispatchers.io()) {
-            val localApp = appDetailedDao.getAppById(appId)
-            if (localApp != null) {
-                return@withContext appDetailedDatabaseMapper.fromEntity(localApp)
-            } else {
-                val remoteAppDto = appsApi.getDetailedApp(appId)
-                val remoteAppDomain = appDetailedNetworkMapper.fromDto(remoteAppDto)
+    override suspend fun toggleWishlist(id: String) {
+    }
 
-                val remoteAppEntity = appDetailedDatabaseMapper.toEntity(remoteAppDomain)
-                appDetailedDao.insertApp(remoteAppEntity)
+    override fun observeAppDetailed(id: String): Flow<AppDetailed> =
+        appDetailedDao
+            .observeAppById(id)
+            .filterNotNull()
+            .map {
+                appDetailedDatabaseMapper.fromEntity(it)
+            }.flowOn(dispatchers.io())
 
-                return@withContext remoteAppDomain
-            }
-        }
+    override suspend fun refreshAppDetailed(appId: String) {
+        val remoteAppDto = appsApi.getDetailedApp(appId)
+        val remoteAppDomain = appDetailedNetworkMapper.fromDto(remoteAppDto)
+        val remoteAppEntity = appDetailedDatabaseMapper.toEntity(remoteAppDomain)
+        appDetailedDao.insertApp(remoteAppEntity)
     }
 }

@@ -59,7 +59,7 @@ fun AppDetailedScreen(
                 ErrorPlaceholder(
                     modifier = Modifier.padding(16.dp),
                     title = currentState.error ?: stringResource(R.string.an_error_occured),
-                    onRetry = { },
+                    onRetry = { viewModel.refreshData() },
                     description = null,
                 )
             }
