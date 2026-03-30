@@ -79,6 +79,7 @@ fun AppDetailedScreen(
         is AppDetailedScreenState.Success ->
             AppDetailedContent(
                 onNavigateBack = onNavigateBack,
+                onToggleWishlist = viewModel::toggleWishlist,
                 modifier = modifier,
                 app = currentState.appDetailed,
             )
@@ -88,6 +89,7 @@ fun AppDetailedScreen(
 @Composable
 private fun AppDetailedContent(
     onNavigateBack: () -> Unit,
+    onToggleWishlist: () -> Unit,
     app: AppDetailed,
     modifier: Modifier = Modifier,
 ) {
@@ -102,11 +104,15 @@ private fun AppDetailedContent(
                 .statusBarsPadding(),
     ) {
         Toolbar(
+            isInWishList = app.isInWishlist,
             onBackClick = {
                 onNavigateBack()
             },
             onShareClick = {
                 Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
+            },
+            onToggleWishlist = {
+                onToggleWishlist()
             },
         )
         Spacer(Modifier.height(8.dp))

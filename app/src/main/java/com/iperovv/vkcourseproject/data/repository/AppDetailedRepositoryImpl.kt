@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AppDetailedRepositoryImpl @Inject constructor(
@@ -21,9 +22,11 @@ class AppDetailedRepositoryImpl @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
 ) : AppDetailedRepository {
     override suspend fun toggleWishlist(appId: String) {
-        val currentData = appDetailedDao.getAppById(appId)
-        currentData?.let {
-            appDetailedDao.updateWishlistStatus(appId, !currentData.isInWishlist)
+        withContext(dispatchers.io()) {
+            val currentData = appDetailedDao.getAppById(appId)
+            currentData?.let {
+                appDetailedDao.updateWishlistStatus(appId, !currentData.isInWishlist)
+            }
         }
     }
 
@@ -36,25 +39,27 @@ class AppDetailedRepositoryImpl @Inject constructor(
             }.flowOn(dispatchers.io())
 
     override suspend fun refreshAppDetailed(appId: String) {
-        val remoteAppDto = appsApi.getDetailedApp(appId)
-        val remoteAppDomain = appDetailedNetworkMapper.fromDto(remoteAppDto)
-        val remoteAppEntity = appDetailedDatabaseMapper.toEntity(remoteAppDomain)
+        withContext(dispatchers.io()) {
+            val remoteAppDto = appsApi.getDetailedApp(appId)
+            val remoteAppDomain = appDetailedNetworkMapper.fromDto(remoteAppDto)
+            val remoteAppEntity = appDetailedDatabaseMapper.toEntity(remoteAppDomain)
 
-        val localAppDetailed = appDetailedDao.getAppById(appId)
-        if (localAppDetailed != null) {
-            appDetailedDao.updateAppDetails(
-                id = remoteAppEntity.id,
-                name = remoteAppEntity.name,
-                developer = remoteAppEntity.developer,
-                category = remoteAppEntity.category,
-                ageRating = remoteAppEntity.ageRating,
-                size = remoteAppEntity.size,
-                iconUrl = remoteAppEntity.iconUrl,
-                screenshotUrlList = remoteAppEntity.screenshotUrlList,
-                description = remoteAppEntity.description,
-            )
-        } else {
-            appDetailedDao.insertApp(remoteAppEntity)
+            val localAppDetailed = appDetailedDao.getAppById(appId)
+            if (localAppDetailed != null) {
+                appDetailedDao.updateAppDetails(
+                    id = remoteAppEntity.id,
+                    name = remoteAppEntity.name,
+                    developer = remoteAppEntity.developer,
+                    category = remoteAppEntity.category,
+                    ageRating = remoteAppEntity.ageRating,
+                    size = remoteAppEntity.size,
+                    iconUrl = remoteAppEntity.iconUrl,
+                    screenshotUrlList = remoteAppEntity.screenshotUrlList,
+                    description = remoteAppEntity.description,
+                )
+            } else {
+                appDetailedDao.insertApp(remoteAppEntity)
+            }
         }
     }
 }
