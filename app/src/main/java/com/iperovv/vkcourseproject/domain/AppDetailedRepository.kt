@@ -1,7 +1,12 @@
 package com.iperovv.vkcourseproject.domain
 
 import com.iperovv.vkcourseproject.domain.model.AppDetailed
+import kotlinx.coroutines.flow.Flow
 
 interface AppDetailedRepository {
-    suspend fun getDetailedApp(appId: String): AppDetailed
+    fun observeAppDetailed(id: String): Flow<AppDetailed>
+
+    suspend fun toggleWishlist(id: String)
+
+    suspend fun refreshAppDetailed(appId: String)
 }

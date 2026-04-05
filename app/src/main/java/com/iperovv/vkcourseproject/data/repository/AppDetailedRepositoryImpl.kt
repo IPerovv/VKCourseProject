@@ -7,6 +7,10 @@ import com.iperovv.vkcourseproject.data.remote.api.AppsApi
 import com.iperovv.vkcourseproject.data.remote.mapper.AppDetailedNetworkMapper
 import com.iperovv.vkcourseproject.domain.AppDetailedRepository
 import com.iperovv.vkcourseproject.domain.model.AppDetailed
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -17,19 +21,44 @@ class AppDetailedRepositoryImpl @Inject constructor(
     private val appDetailedDatabaseMapper: AppDetailedDatabaseMapper,
     private val dispatchers: CoroutineDispatchers,
 ) : AppDetailedRepository {
-    override suspend fun getDetailedApp(appId: String): AppDetailed {
-        return withContext(dispatchers.io()) {
-            val localApp = appDetailedDao.getAppById(appId)
-            if (localApp != null) {
-                return@withContext appDetailedDatabaseMapper.fromEntity(localApp)
+    override suspend fun toggleWishlist(appId: String) {
+        withContext(dispatchers.io()) {
+            val currentData = appDetailedDao.getAppById(appId)
+            currentData?.let {
+                appDetailedDao.updateWishlistStatus(appId, !currentData.isInWishlist)
+            }
+        }
+    }
+
+    override fun observeAppDetailed(appId: String): Flow<AppDetailed> =
+        appDetailedDao
+            .observeAppById(appId)
+            .filterNotNull()
+            .map {
+                appDetailedDatabaseMapper.fromEntity(it)
+            }.flowOn(dispatchers.io())
+
+    override suspend fun refreshAppDetailed(appId: String) {
+        withContext(dispatchers.io()) {
+            val remoteAppDto = appsApi.getDetailedApp(appId)
+            val remoteAppDomain = appDetailedNetworkMapper.fromDto(remoteAppDto)
+            val remoteAppEntity = appDetailedDatabaseMapper.toEntity(remoteAppDomain)
+
+            val localAppDetailed = appDetailedDao.getAppById(appId)
+            if (localAppDetailed != null) {
+                appDetailedDao.updateAppDetails(
+                    id = remoteAppEntity.id,
+                    name = remoteAppEntity.name,
+                    developer = remoteAppEntity.developer,
+                    category = remoteAppEntity.category,
+                    ageRating = remoteAppEntity.ageRating,
+                    size = remoteAppEntity.size,
+                    iconUrl = remoteAppEntity.iconUrl,
+                    screenshotUrlList = remoteAppEntity.screenshotUrlList,
+                    description = remoteAppEntity.description,
+                )
             } else {
-                val remoteAppDto = appsApi.getDetailedApp(appId)
-                val remoteAppDomain = appDetailedNetworkMapper.fromDto(remoteAppDto)
-
-                val remoteAppEntity = appDetailedDatabaseMapper.toEntity(remoteAppDomain)
                 appDetailedDao.insertApp(remoteAppEntity)
-
-                return@withContext remoteAppDomain
             }
         }
     }
