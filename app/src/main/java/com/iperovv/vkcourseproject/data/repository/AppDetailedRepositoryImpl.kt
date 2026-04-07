@@ -33,10 +33,11 @@ class AppDetailedRepositoryImpl @Inject constructor(
     override fun observeAppDetailed(appId: String): Flow<AppDetailed> =
         appDetailedDao
             .observeAppById(appId)
+            .flowOn(dispatchers.io())
             .filterNotNull()
             .map {
                 appDetailedDatabaseMapper.fromEntity(it)
-            }.flowOn(dispatchers.io())
+            }
 
     override suspend fun refreshAppDetailed(appId: String) {
         withContext(dispatchers.io()) {

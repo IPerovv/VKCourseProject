@@ -3,7 +3,9 @@ package com.iperovv.vkcourseproject.ui.screens.appdetailed
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iperovv.vkcourseproject.domain.AppDetailedRepository
+import com.iperovv.vkcourseproject.domain.usecase.ObserveAppDetailedUseCase
+import com.iperovv.vkcourseproject.domain.usecase.RefreshAppDetailedUseCase
+import com.iperovv.vkcourseproject.domain.usecase.ToggleWishlistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppDetailedScreenViewModel @Inject constructor(
-    private val appDetailedRepository: AppDetailedRepository,
+    private val observeAppDetailedUseCase: ObserveAppDetailedUseCase,
+    private val refreshAppDetailedUseCase: RefreshAppDetailedUseCase,
+    private val toggleWishlistUseCase: ToggleWishlistUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val appId: String = checkNotNull(savedStateHandle["appId"])
@@ -33,7 +37,7 @@ class AppDetailedScreenViewModel @Inject constructor(
                 _state.value = AppDetailedScreenState.Loading
             }
             runCatching {
-                appDetailedRepository.refreshAppDetailed(appId)
+                refreshAppDetailedUseCase(appId)
             }.onFailure { error ->
                 if (_state.value is AppDetailedScreenState.Success) {
                     // Можно показать снек, что видим возможно устаревшие данные
@@ -46,14 +50,13 @@ class AppDetailedScreenViewModel @Inject constructor(
 
     fun toggleWishlist() {
         viewModelScope.launch {
-            appDetailedRepository.toggleWishlist(appId)
+            toggleWishlistUseCase(appId)
         }
     }
 
     private fun observeDetailedApp() {
         viewModelScope.launch {
-            appDetailedRepository
-                .observeAppDetailed(appId)
+            observeAppDetailedUseCase(appId)
                 .catch { error ->
                     _state.value = AppDetailedScreenState.Error(error.message)
                 }.collect { app ->

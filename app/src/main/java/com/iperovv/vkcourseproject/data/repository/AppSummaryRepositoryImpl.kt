@@ -15,8 +15,8 @@ class AppSummaryRepositoryImpl @Inject constructor(
 ) : AppSummaryRepository {
     override suspend fun getApps(): List<AppSummary> =
         withContext(dispatchers.io()) {
-            val appSummaryListDto = appsApi.getAppList()
-            val apps = appSummaryListDto.map { appSummaryNetworkMapper.fromDto(it) }
-            return@withContext apps
+            appsApi
+                .getAppList()
+                .map(appSummaryNetworkMapper::fromDto)
         }
 }
