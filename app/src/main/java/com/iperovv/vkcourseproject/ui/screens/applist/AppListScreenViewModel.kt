@@ -2,7 +2,7 @@ package com.iperovv.vkcourseproject.ui.screens.applist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iperovv.vkcourseproject.domain.AppSummaryRepository
+import com.iperovv.vkcourseproject.domain.usecase.GetListOfAppSummaryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppListScreenViewModel @Inject constructor(
-    private val appSummaryRepository: AppSummaryRepository,
+    private val getListOfAppSummaryUseCase: GetListOfAppSummaryUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow<AppListScreenState>(AppListScreenState.Loading)
     val state: StateFlow<AppListScreenState> = _state.asStateFlow()
@@ -36,7 +36,7 @@ class AppListScreenViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = AppListScreenState.Loading
             runCatching {
-                val apps = appSummaryRepository.getApps()
+                val apps = getListOfAppSummaryUseCase()
                 _state.value = AppListScreenState.Success(apps)
             }.onFailure {
                 // TODO Знаю, что это нечеловекочитаемо, но пусть временно будет так
